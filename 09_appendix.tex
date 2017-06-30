@@ -1,0 +1,37 @@
+\chapter{Appendix}
+
+\section{Sample Arduino Code}
+
+The following is the loop of code the Arduino performs to read and record data.
+
+\begin{verbatim}
+void loop(){  
+  float celsius = ktc.readCelsius();
+  float fahrenheit = ktc.readFahrenheit();
+  for (i = 0; i < n; i++){
+    float readOutput = analogRead(motorPin) * 15.0000 / 1024;
+    delay(collectionRate);
+  }
+  // open or create celsiusData file on SD card and write to it
+  celsiusFile = SD.open("celsius.txt", FILE_WRITE);
+  if (celsiusFile){
+    celsiusFile.println(celsius);
+    celsiusFile.close(); // close the file
+  } else {
+    Serial.println("Error opening celsius.txt during loop.");
+  }
+  // open or create outputData file on SD card and write to it
+  outputFile = SD.open("output.txt", FILE_WRITE);
+  if (outputFile){
+  outputFile.println(output);
+  outputFile.close(); // close the file
+  } else {
+    Serial.println("Error opening output.txt during loop.");
+  }
+  // print live temperature and output data in serial monitor
+  Serial.print(celsius); Serial.println(" C");
+  Serial.print(fahrenheit); Serial.println(" F");
+  Serial.print(output);
+  Serial.println(" V");
+}
+\end{verbatim}
